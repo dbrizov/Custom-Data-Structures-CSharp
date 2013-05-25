@@ -48,6 +48,29 @@ namespace CustomDataStructures
             }
         }
 
+        public T this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= this.Count)
+                {
+                    throw new IndexOutOfRangeException("Invalid index: " + index);
+                }
+
+                return this.items[index];
+            }
+
+            set
+            {
+                if (index < 0 || index >= this.Count)
+                {
+                    throw new IndexOutOfRangeException("Invalid index: " + index);
+                }
+
+                this.items[index] = value;
+            }
+        }
+
         public int IndexOf(T item)
         {
             return Array.IndexOf(this.items, item, 0, this.Count);
@@ -109,28 +132,6 @@ namespace CustomDataStructures
             }
 
             this.count--;
-        }
-
-        public T this[int index]
-        {
-            get
-            {
-                if (index < 0 || index >= this.Count)
-                {
-                    throw new IndexOutOfRangeException("Invalid index: " + index);
-                }
-
-                return this.items[index];
-            }
-            set
-            {
-                if (index < 0 || index >= this.Count)
-                {
-                    throw new IndexOutOfRangeException("Invalid index: " + index);
-                }
-
-                this.items[index] = value;
-            }
         }
 
         public void Add(T item)
