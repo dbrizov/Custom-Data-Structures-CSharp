@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CustomDataStructures.Tests
 {
@@ -167,7 +167,30 @@ namespace CustomDataStructures.Tests
             Assert.AreEqual(1, list[0]);
             Assert.AreEqual(5, list[1]);
             Assert.AreEqual(2, list[2]);
+            Assert.AreEqual(3, list[3]);
             Assert.AreEqual(4, list[4]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void TestInsert_ListIsEmpty()
+        {
+            CustomList<int> list = new CustomList<int>();
+            list.Insert(1, 5);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void TestInsert_CountEqualsOne()
+        {
+            CustomList<int> list = new CustomList<int>();
+            list.Add(1);
+
+            list.Insert(0, 5);
+
+            Assert.AreEqual(2, list.Count);
+            Assert.AreEqual(5, list[0]);
+            Assert.AreEqual(1, list[1]);
         }
 
         [TestMethod]
