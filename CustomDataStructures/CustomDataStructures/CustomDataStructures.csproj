@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="CustomLinkedList.cs" />
     <Compile Include="CustomList.cs" />
+    <Compile Include="CustomQueue.cs" />
     <Compile Include="CustomStack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CustomDataStructures
 {
-    public class CustomStack<T> : IEnumerable<T>, ICloneable
+    public class CustomQueue<T> : IEnumerable<T>, ICloneable
     {
         private class Node
         {
@@ -18,19 +18,22 @@ namespace CustomDataStructures
                 this.Next = null;
             }
 
-            public Node(T item, Node next)
+            public Node(T item, Node previous)
             {
                 this.Item = item;
-                this.Next = next;
+                this.Next = null;
+                previous.Next = this;
             }
         }
 
-        private Node top;
+        private Node front;
+        private Node back;
         private int count;
 
-        public CustomStack()
+        public CustomQueue()
         {
-            this.top = null;
+            this.front = null;
+            this.back = null;
             this.count = 0;
         }
 
@@ -42,56 +45,57 @@ namespace CustomDataStructures
             }
         }
 
-        public T Peek()
+        public void Enqueue(T item)
         {
-            if (this.count == 0)
+            if (this.front == null)
             {
-                // We have empty stack
-                throw new InvalidOperationException("The stack is empty");
+                // We have empty queue
+                this.front = new Node(item);
+                this.back = this.front;
+            }
+            else
+            {
+                Node newNode = new Node(item, this.back);
+                this.back = newNode;
             }
 
-            return this.top.Item;
+            this.count++;
         }
 
-        public T Pop()
+        public T Dequeue()
         {
             if (this.count == 0)
             {
-                // We have empty stack
-                throw new InvalidOperationException("The stack is empty");
+                // We have empty queue
+                throw new InvalidOperationException("The queue is empty");
             }
 
-            T result = this.top.Item;
-            this.top = this.top.Next;
+            T result = this.front.Item;
+            this.front = this.front.Next;
             this.count--;
 
             return result;
         }
 
-        public void Push(T item)
+        public T Peek()
         {
-            if (this.top == null)
+            if (this.count == 0)
             {
-                // We have empty stack
-                this.top = new Node(item);
-            }
-            else
-            {
-                Node newNode = new Node(item, this.top);
-                this.top = newNode;
+                // We have empty queue
+                throw new InvalidOperationException("The queue is empty");
             }
 
-            this.count++;
+            return this.front.Item;
         }
 
         public override string ToString()
         {
             StringBuilder result = new StringBuilder();
 
-            Node currentNode = this.top;
+            Node currentNode = this.front;
             while (currentNode != null)
             {
-                result.Append(currentNode.Item.ToString());
+                result.Append(currentNode.Item);
                 currentNode = currentNode.Next;
             }
 
@@ -102,8 +106,8 @@ namespace CustomDataStructures
         {
             T[] result = new T[this.count];
 
-            Node currentNode = this.top;
-            for (int i = 0; i < this.count; i++)
+            Node currentNode = this.front;
+            for (int i = 0; i < result.Length; i++)
             {
                 result[i] = currentNode.Item;
                 currentNode = currentNode.Next;
@@ -114,31 +118,24 @@ namespace CustomDataStructures
 
         public void Clear()
         {
-            this.top = null;
+            this.front = null;
+            this.back = null;
             this.count = 0;
         }
 
         public object Clone()
         {
-            CustomStack<T> clone = new CustomStack<T>();
+            CustomQueue<T> clone = new CustomQueue<T>();
 
             if (this.count != 0)
             {
-                // We have non-empty stack
-                clone.top = new Node(this.top.Item);
-                Node currentNode = this.top.Next;
-                Node helperNode = clone.top; // helps us to make the links between the nodes of the clone
-
+                // We have non-empty queue
+                Node currentNode = this.front;
                 while (currentNode != null)
                 {
-                    Node newNode = new Node(currentNode.Item);
-                    helperNode.Next = newNode;
-                    helperNode = newNode;
+                    clone.Enqueue(currentNode.Item);
                     currentNode = currentNode.Next;
                 }
-
-                helperNode.Next = null;
-                clone.count = this.count;
             }
 
             return clone;
@@ -146,7 +143,7 @@ namespace CustomDataStructures
 
         public IEnumerator<T> GetEnumerator()
         {
-            Node currentNode = this.top;
+            Node currentNode = this.front;
             while (currentNode != null)
             {
                 T result = currentNode.Item;
