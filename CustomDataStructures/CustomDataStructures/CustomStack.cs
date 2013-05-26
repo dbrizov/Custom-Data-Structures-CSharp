@@ -127,17 +127,17 @@ namespace CustomDataStructures
                 // We have non-empty stack
                 clone.top = new Node(this.top.Item);
                 Node currentNode = this.top.Next;
-                Node helperNode = clone.top; // helps us to make the links between the nodes of the clone
+                Node cloneLastNode = clone.top;
 
                 while (currentNode != null)
                 {
                     Node newNode = new Node(currentNode.Item);
-                    helperNode.Next = newNode;
-                    helperNode = newNode;
+                    cloneLastNode.Next = newNode;
+                    cloneLastNode = newNode;
                     currentNode = currentNode.Next;
                 }
 
-                helperNode.Next = null;
+                cloneLastNode.Next = null;
                 clone.count = this.count;
             }
 
