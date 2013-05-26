@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CustomDataStructures.Tests
 {
@@ -125,7 +125,7 @@ namespace CustomDataStructures.Tests
         {
             CustomStack<int> stack = new CustomStack<int>();
 
-            Assert.AreEqual("", stack.ToString());
+            Assert.AreEqual(string.Empty, stack.ToString());
         }
 
         [TestMethod]
@@ -152,7 +152,7 @@ namespace CustomDataStructures.Tests
             int[] arr = stack.ToArray();
 
             Assert.AreEqual(10, arr.Length);
-            Assert.AreEqual("9876543210", string.Join("", arr));
+            Assert.AreEqual("9876543210", string.Join(string.Empty, arr));
         }
 
         [TestMethod]
@@ -169,7 +169,7 @@ namespace CustomDataStructures.Tests
 
             Assert.AreEqual(5, stack.Count);
             Assert.AreEqual(0, clone.Count);
-            Assert.AreEqual("", clone.ToString());
+            Assert.AreEqual(string.Empty, clone.ToString());
         }
 
         [TestMethod]
@@ -203,7 +203,7 @@ namespace CustomDataStructures.Tests
             stack.Clear();
 
             Assert.AreEqual(0, stack.Count);
-            Assert.AreEqual("", stack.ToString());
+            Assert.AreEqual(string.Empty, stack.ToString());
         }
 
         [TestMethod]
@@ -219,7 +219,7 @@ namespace CustomDataStructures.Tests
             stack.Clear();
 
             Assert.AreEqual(0, stack.Count);
-            Assert.AreEqual("", stack.ToString());
+            Assert.AreEqual(string.Empty, stack.ToString());
         }
 
         [TestMethod]

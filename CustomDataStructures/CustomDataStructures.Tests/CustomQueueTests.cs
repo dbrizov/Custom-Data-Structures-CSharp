@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CustomDataStructures.Tests
 {
@@ -67,6 +67,7 @@ namespace CustomDataStructures.Tests
                 int dequeuedItem = queue.Dequeue();
                 Assert.AreEqual(i, dequeuedItem);
             }
+
             Assert.AreEqual(5, queue.Count);
             Assert.AreEqual("56789", queue.ToString());
         }
@@ -110,7 +111,7 @@ namespace CustomDataStructures.Tests
         {
             CustomQueue<int> queue = new CustomQueue<int>();
 
-            Assert.AreEqual("", queue.ToString());
+            Assert.AreEqual(string.Empty, queue.ToString());
         }
 
         [TestMethod]
@@ -152,7 +153,7 @@ namespace CustomDataStructures.Tests
 
             Assert.AreEqual(10, arr.Length);
             Assert.AreEqual(queue.Peek(), arr[0]);
-            Assert.AreEqual(queue.ToString(), string.Join("", arr));
+            Assert.AreEqual(queue.ToString(), string.Join(string.Empty, arr));
         }
 
         [TestMethod]

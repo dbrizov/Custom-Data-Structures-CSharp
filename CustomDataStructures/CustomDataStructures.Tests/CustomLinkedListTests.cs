@@ -553,7 +553,6 @@ namespace CustomDataStructures.Tests
             list.Add(4);
             list.Add(5);
 
-
             for (int i = 0; i < 5; i++)
             {
                 list.RemoveFirst();
@@ -590,7 +589,6 @@ namespace CustomDataStructures.Tests
             list.Add(3);
             list.Add(4);
             list.Add(5);
-
 
             for (int i = 0; i < 5; i++)
             {
@@ -634,7 +632,6 @@ namespace CustomDataStructures.Tests
             Assert.IsFalse(list.Contains(5));
         }
 
-        //
         [TestMethod]
         public void TestCopyTo()
         {
