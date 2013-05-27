@@ -127,15 +127,12 @@ namespace CustomDataStructures
         {
             CustomQueue<T> clone = new CustomQueue<T>();
 
-            if (this.count != 0)
+            Node currentNode = this.front;
+            while (currentNode != null)
             {
                 // We have non-empty queue
-                Node currentNode = this.front;
-                while (currentNode != null)
-                {
-                    clone.Enqueue(currentNode.Item);
-                    currentNode = currentNode.Next;
-                }
+                clone.Enqueue(currentNode.Item);
+                currentNode = currentNode.Next;
             }
 
             return clone;
