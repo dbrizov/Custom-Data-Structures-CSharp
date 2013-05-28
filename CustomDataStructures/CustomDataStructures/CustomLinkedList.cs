@@ -96,6 +96,47 @@ namespace CustomDataStructures
             return -1;
         }
 
+        public void Add(T item)
+        {
+            if (this.first == null)
+            {
+                // We have empty list
+                this.first = new Node(item);
+                this.last = this.first;
+            }
+            else
+            {
+                Node newNode = new Node(item, this.last); // Connect the last node with the new node
+                this.last = newNode; // The new node is made the last in the list
+            }
+
+            this.count++;
+        }
+
+        public void AddFirst(T item)
+        {
+            if (this.first == null)
+            {
+                // We have empty list
+                this.first = new Node(item);
+                this.last = this.first;
+            }
+            else
+            {
+                Node newNode = new Node(item);
+                newNode.Next = this.first; // Connect the new node with the first
+                this.first = newNode; // The new node is now the first in the list
+            }
+
+            this.count++;
+        }
+
+        // The same as Add(T item)
+        public void AddLast(T item)
+        {
+            this.Add(item);
+        }
+
         public void Insert(int index, T item)
         {
             if (index < 0 || index >= this.count)
@@ -109,18 +150,10 @@ namespace CustomDataStructures
             }
             else
             {
-                Node currentNode = this.first;
-
-                // Find the node at index (index - 1)
-                for (int i = 0; i < index - 1; i++)
-                {
-                    currentNode = currentNode.Next;
-                }
-
-                Node nodeAtIndex = currentNode.Next;
-
-                Node newNode = new Node(item, currentNode);
-                newNode.Next = nodeAtIndex;
+                Node previousNode = this.GetNode(index - 1);
+                Node nodeAtIndex = previousNode.Next;
+                Node newNode = new Node(item, previousNode); // Connect the previous node with the new node
+                newNode.Next = nodeAtIndex; // Connect the new node with the one at the given index
 
                 this.count++;
             }
@@ -157,17 +190,10 @@ namespace CustomDataStructures
             }
             else
             {
-                Node currentNode = this.first;
-
-                // Find the node at index (index - 1)
-                for (int i = 0; i < index - 1; i++)
-                {
-                    currentNode = currentNode.Next;
-                }
-
-                Node nodeThatWillBeRemove = currentNode.Next;
-                currentNode.Next = nodeThatWillBeRemove.Next;
-                nodeThatWillBeRemove = null;
+                Node previousNode = this.GetNode(index - 1);
+                Node nodeThatWillBeRemove = previousNode.Next;
+                previousNode.Next = nodeThatWillBeRemove.Next; // Connect the previous node with the node after the one that will be removed
+                nodeThatWillBeRemove = null; // This will force the garbage collector to delete the node
 
                 this.count--;
             }
@@ -194,59 +220,12 @@ namespace CustomDataStructures
             }
             else
             {
-                Node currentNode = this.first;
-
-                // Find the node at index (this.count - 1)
-                for (int i = 0; i < this.count - 1; i++)
-                {
-                    currentNode = currentNode.Next;
-                }
-
-                currentNode.Next = null;
-                this.last = currentNode;
+                Node beforeLast = this.GetNode(this.count - 1);
+                beforeLast.Next = null;
+                this.last = beforeLast;
 
                 this.count--;
             }
-        }
-
-        public void Add(T item)
-        {
-            if (this.first == null)
-            {
-                // We have empty list
-                this.first = new Node(item);
-                this.last = this.first;
-            }
-            else
-            {
-                Node newNode = new Node(item, this.last);
-                this.last = newNode;
-            }
-
-            this.count++;
-        }
-
-        public void AddFirst(T item)
-        {
-            if (this.first == null)
-            {
-                // We have empty list
-                this.first = new Node(item);
-                this.last = this.first;
-            }
-            else
-            {
-                Node newNode = new Node(item);
-                newNode.Next = this.first;
-                this.first = newNode;
-            }
-
-            this.count++;
-        }
-
-        public void AddLast(T item)
-        {
-            this.Add(item);
         }
 
         public void Clear()
