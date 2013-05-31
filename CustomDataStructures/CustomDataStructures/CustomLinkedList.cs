@@ -220,7 +220,7 @@ namespace CustomDataStructures
             }
             else
             {
-                Node beforeLast = this.GetNode(this.count - 1);
+                Node beforeLast = this.GetNode(this.count - 2);
                 beforeLast.Next = null;
                 this.last = beforeLast;
 
