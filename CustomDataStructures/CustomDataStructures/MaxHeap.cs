@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace CustomDataStructures
 {
-    // A PriorityQueue implemented with Max-Binary-Heap
-    public class PriorityQueue<T> where T : IComparable
+    public class MaxHeap<T> where T : IComparable
     {
         private const int INITIAL_CAPACITY = 16;
 
         private T[] arr;
         private int lastItemIndex;
 
-        public PriorityQueue()
+        public MaxHeap()
             : this(INITIAL_CAPACITY)
         {
         }
 
-        public PriorityQueue(int capacity)
+        public MaxHeap(int capacity)
         {
             this.arr = new T[capacity];
             lastItemIndex = -1;
@@ -30,7 +28,7 @@ namespace CustomDataStructures
             }
         }
 
-        public void Enqueue(T item)
+        public void Add(T item)
         {
             if (this.lastItemIndex == this.arr.Length - 1)
             {
@@ -43,15 +41,30 @@ namespace CustomDataStructures
             this.MaxHeapifyUp(lastItemIndex);
         }
 
-        public T Dequeue()
+        public T Remove()
         {
-            T dequeuedItem = this.arr[0];
+            if (this.lastItemIndex == -1)
+            {
+                throw new InvalidOperationException("The heap is empty");
+            }
+
+            T removedItem = this.arr[0];
             this.arr[0] = this.arr[lastItemIndex];
             lastItemIndex--;
 
             this.MaxHeapifyDown(0);
 
-            return dequeuedItem;
+            return removedItem;
+        }
+
+        public T Peek()
+        {
+            if (this.lastItemIndex == -1)
+            {
+                throw new InvalidOperationException("The heap is empty");
+            }
+
+            return this.arr[0];
         }
 
         public void Clear()
