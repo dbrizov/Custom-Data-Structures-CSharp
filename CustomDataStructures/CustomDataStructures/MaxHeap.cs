@@ -17,7 +17,7 @@ namespace CustomDataStructures
         public MaxHeap(int capacity)
         {
             this.arr = new T[capacity];
-            lastItemIndex = -1;
+            this.lastItemIndex = -1;
         }
 
         public int Count
@@ -36,9 +36,9 @@ namespace CustomDataStructures
             }
 
             this.lastItemIndex++;
-            this.arr[lastItemIndex] = item;
+            this.arr[this.lastItemIndex] = item;
 
-            this.MaxHeapifyUp(lastItemIndex);
+            this.MaxHeapifyUp(this.lastItemIndex);
         }
 
         public T Remove()
@@ -49,8 +49,8 @@ namespace CustomDataStructures
             }
 
             T removedItem = this.arr[0];
-            this.arr[0] = this.arr[lastItemIndex];
-            lastItemIndex--;
+            this.arr[0] = this.arr[this.lastItemIndex];
+            this.lastItemIndex--;
 
             this.MaxHeapifyDown(0);
 
@@ -118,14 +118,14 @@ namespace CustomDataStructures
                 this.arr[index] = this.arr[largestItemIndex];
                 this.arr[largestItemIndex] = temp;
 
-                MaxHeapifyDown(largestItemIndex);
+                this.MaxHeapifyDown(largestItemIndex);
             }
         }
 
         private void Resize()
         {
             T[] newArr = new T[this.arr.Length * 2];
-            for (int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < this.arr.Length; i++)
             {
                 newArr[i] = this.arr[i];
             }
