@@ -5,39 +5,39 @@ using System.Text;
 namespace CustomDataStructures.Tests
 {
     [TestClass]
-    public class MaxHeapTests
+    public class MinHeapTests
     {
         [TestMethod]
         public void TestAdd_OneItem()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
-            maxHeap.Add(1);
+            MinHeap<int> minHeap = new MinHeap<int>();
+            minHeap.Add(1);
 
-            Assert.AreEqual(1, maxHeap.Count);
+            Assert.AreEqual(1, minHeap.Count);
         }
 
         [TestMethod]
         public void TestAdd_100Item()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            MinHeap<int> minHeap = new MinHeap<int>();
             int items = 100;
             for (int i = 0; i < items; i++)
             {
-                maxHeap.Add(i);
+                minHeap.Add(i);
             }
 
-            Assert.AreEqual(100, maxHeap.Count);
+            Assert.AreEqual(100, minHeap.Count);
         }
 
         [TestMethod]
         [Timeout(2000)]
         public void TestAdd_Performace_WorstCase()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            MinHeap<int> minHeap = new MinHeap<int>();
             int items = 500000;
-            for (int i = 0; i < items; i++)
+            for (int i = items; i >= 1; i--)
             {
-                maxHeap.Add(i);
+                minHeap.Add(i);
             }
         }
 
@@ -45,33 +45,33 @@ namespace CustomDataStructures.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestRemove_EmptyHeap()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
-            maxHeap.Remove();
+            MinHeap<int> minHeap = new MinHeap<int>();
+            minHeap.Remove();
         }
 
         [TestMethod]
         public void TestRemove_TenItems()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            MinHeap<int> minHeap = new MinHeap<int>();
             int items = 10;
-            maxHeap.Add(10);
-            maxHeap.Add(1);
-            maxHeap.Add(9);
-            maxHeap.Add(2);
-            maxHeap.Add(8);
-            maxHeap.Add(3);
-            maxHeap.Add(7);
-            maxHeap.Add(4);
-            maxHeap.Add(6);
-            maxHeap.Add(5);
+            minHeap.Add(10);
+            minHeap.Add(1);
+            minHeap.Add(9);
+            minHeap.Add(2);
+            minHeap.Add(8);
+            minHeap.Add(3);
+            minHeap.Add(7);
+            minHeap.Add(4);
+            minHeap.Add(6);
+            minHeap.Add(5);
 
             StringBuilder actual = new StringBuilder();
             for (int i = 0; i < items; i++)
             {
-                actual.Append(maxHeap.Remove());
+                actual.Append(minHeap.Remove());
             }
 
-            string expected = "10987654321";
+            string expected = "12345678910";
 
             Assert.AreEqual(expected, actual.ToString());
         }
@@ -80,16 +80,16 @@ namespace CustomDataStructures.Tests
         [Timeout(4000)]
         public void TestRemove_Performace()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            MinHeap<int> minHeap = new MinHeap<int>();
             int items = 500000;
             for (int i = 0; i < items; i++)
             {
-                maxHeap.Add(i);
+                minHeap.Add(i);
             }
 
             for (int i = 0; i < items; i++)
             {
-                maxHeap.Remove();
+                minHeap.Remove();
             }
         }
 
@@ -97,20 +97,20 @@ namespace CustomDataStructures.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestPeek_EmptyHeap()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
-            maxHeap.Peek();
+            MinHeap<int> minHeap = new MinHeap<int>();
+            minHeap.Peek();
         }
 
         [TestMethod]
         public void TestPeek_NonEmptyHeap()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
-            maxHeap.Add(5);
-            maxHeap.Add(90);
-            maxHeap.Add(15);
-            maxHeap.Add(89);
+            MinHeap<int> minHeap = new MinHeap<int>();
+            minHeap.Add(90);
+            minHeap.Add(5);
+            minHeap.Add(15);
+            minHeap.Add(89);
 
-            Assert.AreEqual(90, maxHeap.Peek());
+            Assert.AreEqual(5, minHeap.Peek());
         }
     }
 }
