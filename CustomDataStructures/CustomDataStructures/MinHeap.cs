@@ -70,6 +70,7 @@ namespace CustomDataStructures
         public void Clear()
         {
             this.lastItemIndex = -1;
+            this.arr = new T[INITIAL_CAPACITY];
         }
 
         private void MinHeapifyUp(int index)

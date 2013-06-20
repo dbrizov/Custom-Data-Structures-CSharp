@@ -77,6 +77,29 @@ namespace CustomDataStructures.Tests
         }
 
         [TestMethod]
+        public void TestRemove_EqualItems()
+        {
+            MinHeap<int> minHeap = new MinHeap<int>();
+            int items = 11;
+            for (int i = 0; i < items - 1; i++)
+            {
+                minHeap.Add(1);
+            }
+
+            minHeap.Add(2);
+
+            StringBuilder actual = new StringBuilder();
+            for (int i = 0; i < items; i++)
+            {
+                actual.Append(minHeap.Remove());
+            }
+
+            string expected = "11111111112";
+
+            Assert.AreEqual(expected, actual.ToString());
+        }
+
+        [TestMethod]
         [Timeout(4000)]
         public void TestRemove_Performace()
         {
@@ -111,6 +134,20 @@ namespace CustomDataStructures.Tests
             minHeap.Add(89);
 
             Assert.AreEqual(5, minHeap.Peek());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TestClear()
+        {
+            MinHeap<int> minHeap = new MinHeap<int>();
+            minHeap.Add(1);
+            minHeap.Add(2);
+            minHeap.Add(3);
+
+            minHeap.Clear();
+            Assert.AreEqual(0, minHeap.Count);
+            minHeap.Peek();
         }
     }
 }

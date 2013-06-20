@@ -77,6 +77,29 @@ namespace CustomDataStructures.Tests
         }
 
         [TestMethod]
+        public void TestRemove_EqualItems()
+        {
+            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            int items = 11;
+            for (int i = 0; i < items - 1; i++)
+            {
+                maxHeap.Add(1);
+            }
+
+            maxHeap.Add(2);
+
+            StringBuilder actual = new StringBuilder();
+            for (int i = 0; i < items; i++)
+            {
+                actual.Append(maxHeap.Remove());
+            }
+
+            string expected = "21111111111";
+
+            Assert.AreEqual(expected, actual.ToString());
+        }
+
+        [TestMethod]
         [Timeout(4000)]
         public void TestRemove_Performace()
         {
@@ -111,6 +134,20 @@ namespace CustomDataStructures.Tests
             maxHeap.Add(89);
 
             Assert.AreEqual(90, maxHeap.Peek());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TestClear()
+        {
+            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            maxHeap.Add(1);
+            maxHeap.Add(2);
+            maxHeap.Add(3);
+
+            maxHeap.Clear();
+            Assert.AreEqual(0, maxHeap.Count);
+            maxHeap.Peek();
         }
     }
 }
