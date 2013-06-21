@@ -100,6 +100,37 @@ namespace CustomDataStructures.Tests
         }
 
         [TestMethod]
+        public void TestRemove_RandomItems()
+        {
+            MaxHeap<int> maxHeap = new MaxHeap<int>();
+
+            int itemsCount = 10000;
+            int[] items = new int[itemsCount];
+            Random random = new Random();
+
+            for (int i = 0; i < itemsCount; i++)
+            {
+                int randomNumber = random.Next(50000);
+                items[i] = randomNumber;
+                maxHeap.Add(randomNumber);
+            }
+
+            Assert.AreEqual(itemsCount, maxHeap.Count);
+
+            Array.Sort(items, (x, y) =>
+                {
+                    return y.CompareTo(x);
+                });
+
+            for (int i = 0; i < itemsCount; i++)
+            {
+                Assert.AreEqual(items[i], maxHeap.Remove());
+            }
+
+            Assert.AreEqual(0, maxHeap.Count);
+        }
+
+        [TestMethod]
         [Timeout(4000)]
         public void TestRemove_Performace()
         {

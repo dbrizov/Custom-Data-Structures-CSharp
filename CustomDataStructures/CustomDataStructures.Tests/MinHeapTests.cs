@@ -100,6 +100,33 @@ namespace CustomDataStructures.Tests
         }
 
         [TestMethod]
+        public void TestRemove_RandomItems()
+        {
+            MinHeap<int> minHeap = new MinHeap<int>();
+
+            int itemsCount = 10000;
+            int[] items = new int[itemsCount];
+            Random random = new Random();
+
+            for (int i = 0; i < itemsCount; i++)
+            {
+                int randomNumber = random.Next(50000);
+                items[i] = randomNumber;
+                minHeap.Add(randomNumber);
+            }
+
+            Assert.AreEqual(itemsCount, minHeap.Count);
+
+            Array.Sort(items);
+            for (int i = 0; i < itemsCount; i++)
+            {
+                Assert.AreEqual(items[i], minHeap.Remove());
+            }
+
+            Assert.AreEqual(0, minHeap.Count);
+        }
+
+        [TestMethod]
         [Timeout(4000)]
         public void TestRemove_Performace()
         {
