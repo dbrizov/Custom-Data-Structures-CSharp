@@ -39,12 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bucket.cs" />
     <Compile Include="CustomLinkedList.cs" />
     <Compile Include="CustomList.cs" />
     <Compile Include="CustomQueue.cs" />
     <Compile Include="CustomStack.cs" />
+    <Compile Include="KeyValuePair.cs" />
     <Compile Include="MaxHeap.cs" />
     <Compile Include="MinHeap.cs" />
+    <Compile Include="HashTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

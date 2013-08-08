@@ -54,6 +54,7 @@
     <Compile Include="CustomListTests.cs" />
     <Compile Include="CustomQueueTests.cs" />
     <Compile Include="CustomStackTests.cs" />
+    <Compile Include="HashTableTests.cs" />
     <Compile Include="MaxHeapTests.cs" />
     <Compile Include="MinHeapTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
