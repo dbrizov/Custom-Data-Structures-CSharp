@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CustomDataStructures
 {
-    public class MaxHeap<T> where T : IComparable<T>
+    public class MaxHeap<T>
     {
         private const int INITIAL_CAPACITY = 16;
 

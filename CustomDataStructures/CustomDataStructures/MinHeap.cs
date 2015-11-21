@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CustomDataStructures
 {
-    public class MinHeap<T> where T : IComparable<T>
+    public class MinHeap<T>
     {
         private const int INITIAL_CAPACITY = 16;
 
