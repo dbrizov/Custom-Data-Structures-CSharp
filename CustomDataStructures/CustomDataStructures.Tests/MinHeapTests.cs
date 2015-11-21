@@ -89,13 +89,17 @@ namespace CustomDataStructures.Tests
         public void TestRemove_EqualItems()
         {
             MinHeap<int> minHeap = new MinHeap<int>();
-            int items = 11;
-            for (int i = 0; i < items - 1; i++)
+            int items = 15;
+            for (int i = 0; i < items - 5; i++)
             {
                 minHeap.Add(1);
             }
 
             minHeap.Add(2);
+            minHeap.Add(0);
+            minHeap.Add(0);
+            minHeap.Add(3);
+            minHeap.Add(3);
 
             StringBuilder actual = new StringBuilder();
             for (int i = 0; i < items; i++)
@@ -103,7 +107,7 @@ namespace CustomDataStructures.Tests
                 actual.Append(minHeap.Remove());
             }
 
-            string expected = "11111111112";
+            string expected = "001111111111233";
 
             Assert.AreEqual(expected, actual.ToString());
         }
