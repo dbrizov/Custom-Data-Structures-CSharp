@@ -5,7 +5,7 @@ namespace CustomDataStructures
 {
     public class MinHeap<T>
     {
-        private const int INITIAL_CAPACITY = 16;
+        private const int INITIAL_CAPACITY = 4;
 
         private T[] arr;
         private int lastItemIndex;
