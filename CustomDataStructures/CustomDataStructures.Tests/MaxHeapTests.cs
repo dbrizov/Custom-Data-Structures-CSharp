@@ -180,5 +180,32 @@ namespace CustomDataStructures.Tests
             Assert.AreEqual(0, maxHeap.Count);
             maxHeap.Peek();
         }
+
+        [TestMethod]
+        public void TestComparer()
+        {
+            MaxHeap<int> maxHeap = new MaxHeap<int>(new ReverseIntComparer());
+            int items = 10;
+            maxHeap.Add(10);
+            maxHeap.Add(1);
+            maxHeap.Add(9);
+            maxHeap.Add(2);
+            maxHeap.Add(8);
+            maxHeap.Add(3);
+            maxHeap.Add(7);
+            maxHeap.Add(4);
+            maxHeap.Add(6);
+            maxHeap.Add(5);
+
+            StringBuilder actual = new StringBuilder();
+            for (int i = 0; i < items; i++)
+            {
+                actual.Append(maxHeap.Remove());
+            }
+
+            string expected = "12345678910";
+
+            Assert.AreEqual(expected, actual.ToString());
+        }
     }
 }

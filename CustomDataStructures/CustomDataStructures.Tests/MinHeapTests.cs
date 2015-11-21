@@ -1,9 +1,18 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
+using System.Collections.Generic;
 
 namespace CustomDataStructures.Tests
 {
+    public class ReverseIntComparer : IComparer<int>
+    {
+        public int Compare(int x, int y)
+        {
+            return y.CompareTo(x);
+        }
+    }
+
     [TestClass]
     public class MinHeapTests
     {
@@ -175,6 +184,33 @@ namespace CustomDataStructures.Tests
             minHeap.Clear();
             Assert.AreEqual(0, minHeap.Count);
             minHeap.Peek();
+        }
+
+        [TestMethod]
+        public void TestComparer()
+        {
+            MinHeap<int> minHeap = new MinHeap<int>(new ReverseIntComparer());
+            int items = 10;
+            minHeap.Add(10);
+            minHeap.Add(1);
+            minHeap.Add(9);
+            minHeap.Add(2);
+            minHeap.Add(8);
+            minHeap.Add(3);
+            minHeap.Add(7);
+            minHeap.Add(4);
+            minHeap.Add(6);
+            minHeap.Add(5);
+
+            StringBuilder actual = new StringBuilder();
+            for (int i = 0; i < items; i++)
+            {
+                actual.Append(minHeap.Remove());
+            }
+
+            string expected = "10987654321";
+
+            Assert.AreEqual(expected, actual.ToString());
         }
     }
 }

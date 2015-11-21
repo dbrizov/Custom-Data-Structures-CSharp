@@ -1,23 +1,36 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CustomDataStructures
 {
-    public class MinHeap<T> where T : IComparable
+    public class MinHeap<T> where T : IComparable<T>
     {
         private const int INITIAL_CAPACITY = 16;
 
         private T[] arr;
         private int lastItemIndex;
+        private IComparer<T> comparer;
 
         public MinHeap()
-            : this(INITIAL_CAPACITY)
+            : this(INITIAL_CAPACITY, Comparer<T>.Default)
         {
         }
 
         public MinHeap(int capacity)
+            : this(capacity, Comparer<T>.Default)
+        {
+        }
+
+        public MinHeap(IComparer<T> comparer)
+            : this(INITIAL_CAPACITY, comparer)
+        {
+        }
+
+        public MinHeap(int capacity, IComparer<T> comparer)
         {
             this.arr = new T[capacity];
             this.lastItemIndex = -1;
+            this.comparer = comparer;
         }
 
         public int Count
@@ -83,7 +96,7 @@ namespace CustomDataStructures
             int childIndex = index;
             int parentIndex = (index - 1) / 2;
 
-            if (this.arr[childIndex].CompareTo(this.arr[parentIndex]) < 0)
+            if (this.comparer.Compare(this.arr[childIndex], this.arr[parentIndex]) < 0)
             {
                 // swap the parent and the child
                 T temp = this.arr[childIndex];
@@ -101,13 +114,13 @@ namespace CustomDataStructures
             int smallestItemIndex = index; // The index of the parent
 
             if (leftChildIndex <= this.lastItemIndex &&
-                this.arr[leftChildIndex].CompareTo(this.arr[smallestItemIndex]) < 0)
+                this.comparer.Compare(this.arr[leftChildIndex], this.arr[smallestItemIndex]) < 0)
             {
                 smallestItemIndex = leftChildIndex;
             }
 
             if (rightChildIndex <= this.lastItemIndex &&
-                this.arr[rightChildIndex].CompareTo(this.arr[smallestItemIndex]) < 0)
+                this.comparer.Compare(this.arr[rightChildIndex], this.arr[smallestItemIndex]) < 0)
             {
                 smallestItemIndex = rightChildIndex;
             }
