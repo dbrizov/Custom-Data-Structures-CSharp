@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
 
@@ -172,13 +172,22 @@ namespace CustomDataStructures.Tests
         public void TestClear()
         {
             MaxHeap<int> maxHeap = new MaxHeap<int>();
-            maxHeap.Add(1);
-            maxHeap.Add(2);
-            maxHeap.Add(3);
+            for (int i = 0; i < 100; i++)
+            {
+                maxHeap.Add(i);
+            }
 
             maxHeap.Clear();
             Assert.AreEqual(0, maxHeap.Count);
             maxHeap.Peek();
+
+            maxHeap.Add(90);
+            maxHeap.Add(5);
+            maxHeap.Add(15);
+            maxHeap.Add(89);
+
+            Assert.AreEqual(4, maxHeap.Count);
+            Assert.AreEqual(90, maxHeap.Peek());
         }
 
         [TestMethod]

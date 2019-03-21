@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
 using System.Collections.Generic;
@@ -181,13 +181,22 @@ namespace CustomDataStructures.Tests
         public void TestClear()
         {
             MinHeap<int> minHeap = new MinHeap<int>();
-            minHeap.Add(1);
-            minHeap.Add(2);
-            minHeap.Add(3);
+            for (int i = 0; i < 100; i++)
+            {
+                minHeap.Add(i);
+            }
 
             minHeap.Clear();
             Assert.AreEqual(0, minHeap.Count);
             minHeap.Peek();
+
+            minHeap.Add(90);
+            minHeap.Add(5);
+            minHeap.Add(15);
+            minHeap.Add(89);
+
+            Assert.AreEqual(4, minHeap.Count);
+            Assert.AreEqual(5, minHeap.Peek());
         }
 
         [TestMethod]
