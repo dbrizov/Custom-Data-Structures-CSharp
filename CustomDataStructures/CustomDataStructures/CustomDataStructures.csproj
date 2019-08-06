@@ -45,7 +45,6 @@
     <Compile Include="CustomQueue.cs" />
     <Compile Include="CustomStack.cs" />
     <Compile Include="KeyValuePair.cs" />
-    <Compile Include="MaxHeap.cs" />
     <Compile Include="MinHeap.cs" />
     <Compile Include="HashTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

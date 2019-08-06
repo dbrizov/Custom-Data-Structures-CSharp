@@ -1,6 +1,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
+using System.Collections.Generic;
 
 namespace CustomDataStructures.Tests
 {
@@ -8,22 +9,22 @@ namespace CustomDataStructures.Tests
     public class MaxHeapTests
     {
         [TestMethod]
-        public void TestAdd_OneItem()
+        public void TestPush_OneItem()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
-            maxHeap.Add(1);
+            MinHeap<int> maxHeap = CreateMaxHeap();
+            maxHeap.Push(1);
 
             Assert.AreEqual(1, maxHeap.Count);
         }
 
         [TestMethod]
-        public void TestAdd_100Item()
+        public void TestPush_100Item()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            MinHeap<int> maxHeap = CreateMaxHeap();
             int items = 100;
             for (int i = 0; i < items; i++)
             {
-                maxHeap.Add(i);
+                maxHeap.Push(i);
             }
 
             Assert.AreEqual(100, maxHeap.Count);
@@ -31,78 +32,68 @@ namespace CustomDataStructures.Tests
 
         [TestMethod]
         [Timeout(2000)]
-        public void TestAdd_Performace_WorstCase()
+        public void TestPush_Performace_WorstCase()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            MinHeap<int> maxHeap = CreateMaxHeap();
             int items = 500000;
             for (int i = 0; i < items; i++)
             {
-                maxHeap.Add(i);
+                maxHeap.Push(i);
             }
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void TestRemove_EmptyHeap()
+        public void TestPop_EmptyHeap()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
-            maxHeap.Remove();
+            MinHeap<int> maxHeap = CreateMaxHeap();
+            maxHeap.Pop();
         }
 
         [TestMethod]
-        public void TestRemove_TenItems()
+        public void TestPop_TenItems()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            MinHeap<int> maxHeap = CreateMaxHeap();
             int items = 10;
-            maxHeap.Add(10);
-            maxHeap.Add(1);
-            maxHeap.Add(9);
-            maxHeap.Add(2);
-            maxHeap.Add(8);
-            maxHeap.Add(3);
-            maxHeap.Add(7);
-            maxHeap.Add(4);
-            maxHeap.Add(6);
-            maxHeap.Add(5);
+            maxHeap.Push(10);
+            maxHeap.Push(1);
+            maxHeap.Push(9);
+            maxHeap.Push(2);
+            maxHeap.Push(8);
+            maxHeap.Push(3);
+            maxHeap.Push(7);
+            maxHeap.Push(4);
+            maxHeap.Push(6);
+            maxHeap.Push(5);
 
-            StringBuilder actual = new StringBuilder();
-            for (int i = 0; i < items; i++)
-            {
-                actual.Append(maxHeap.Remove());
-            }
-
+            string actual = GetString(maxHeap);
             string expected = "10987654321";
 
             Assert.AreEqual(expected, actual.ToString());
         }
 
         [TestMethod]
-        public void TestRemove_EqualItems()
+        public void TestPop_EqualItems()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            MinHeap<int> maxHeap = CreateMaxHeap();
             int items = 11;
             for (int i = 0; i < items - 1; i++)
             {
-                maxHeap.Add(1);
+                maxHeap.Push(1);
             }
 
-            maxHeap.Add(2);
+            maxHeap.Push(2);
 
-            StringBuilder actual = new StringBuilder();
-            for (int i = 0; i < items; i++)
-            {
-                actual.Append(maxHeap.Remove());
-            }
-
+            string actual = GetString(maxHeap);
             string expected = "21111111111";
 
             Assert.AreEqual(expected, actual.ToString());
         }
 
         [TestMethod]
-        public void TestRemove_RandomItems()
+        public void TestPop_RandomItems()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            MinHeap<int> maxHeap = CreateMaxHeap();
 
             int itemsCount = 10000;
             int[] items = new int[itemsCount];
@@ -112,19 +103,19 @@ namespace CustomDataStructures.Tests
             {
                 int randomNumber = random.Next(50000);
                 items[i] = randomNumber;
-                maxHeap.Add(randomNumber);
+                maxHeap.Push(randomNumber);
             }
 
             Assert.AreEqual(itemsCount, maxHeap.Count);
 
             Array.Sort(items, (x, y) =>
-                {
-                    return y.CompareTo(x);
-                });
+            {
+                return y.CompareTo(x);
+            });
 
             for (int i = 0; i < itemsCount; i++)
             {
-                Assert.AreEqual(items[i], maxHeap.Remove());
+                Assert.AreEqual(items[i], maxHeap.Pop());
             }
 
             Assert.AreEqual(0, maxHeap.Count);
@@ -132,18 +123,18 @@ namespace CustomDataStructures.Tests
 
         [TestMethod]
         [Timeout(4000)]
-        public void TestRemove_Performace()
+        public void TestPop_Performace()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            MinHeap<int> maxHeap = CreateMaxHeap();
             int items = 500000;
-            for (int i = 0; i < items; i++)
+            for (int i = items; i > 0; i--)
             {
-                maxHeap.Add(i);
+                maxHeap.Push(i);
             }
 
             for (int i = 0; i < items; i++)
             {
-                maxHeap.Remove();
+                maxHeap.Pop();
             }
         }
 
@@ -151,18 +142,18 @@ namespace CustomDataStructures.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestPeek_EmptyHeap()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            MinHeap<int> maxHeap = CreateMaxHeap();
             maxHeap.Peek();
         }
 
         [TestMethod]
         public void TestPeek_NonEmptyHeap()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
-            maxHeap.Add(5);
-            maxHeap.Add(90);
-            maxHeap.Add(15);
-            maxHeap.Add(89);
+            MinHeap<int> maxHeap = CreateMaxHeap();
+            maxHeap.Push(5);
+            maxHeap.Push(90);
+            maxHeap.Push(15);
+            maxHeap.Push(89);
 
             Assert.AreEqual(90, maxHeap.Peek());
         }
@@ -171,50 +162,100 @@ namespace CustomDataStructures.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestClear()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>();
+            MinHeap<int> maxHeap = CreateMaxHeap();
             for (int i = 0; i < 100; i++)
             {
-                maxHeap.Add(i);
+                maxHeap.Push(i);
             }
 
             maxHeap.Clear();
             Assert.AreEqual(0, maxHeap.Count);
             maxHeap.Peek();
 
-            maxHeap.Add(90);
-            maxHeap.Add(5);
-            maxHeap.Add(15);
-            maxHeap.Add(89);
+            maxHeap.Push(90);
+            maxHeap.Push(5);
+            maxHeap.Push(15);
+            maxHeap.Push(89);
 
             Assert.AreEqual(4, maxHeap.Count);
             Assert.AreEqual(90, maxHeap.Peek());
         }
 
         [TestMethod]
-        public void TestComparer()
+        public void TestRemove()
         {
-            MaxHeap<int> maxHeap = new MaxHeap<int>(new ReverseIntComparer());
-            int items = 10;
-            maxHeap.Add(10);
-            maxHeap.Add(1);
-            maxHeap.Add(9);
-            maxHeap.Add(2);
-            maxHeap.Add(8);
-            maxHeap.Add(3);
-            maxHeap.Add(7);
-            maxHeap.Add(4);
-            maxHeap.Add(6);
-            maxHeap.Add(5);
+            MinHeap<int> maxHeap = GetHeap();
+            maxHeap.Remove(1);
+            Assert.AreEqual("98765432", GetString(maxHeap));
 
-            StringBuilder actual = new StringBuilder();
-            for (int i = 0; i < items; i++)
+            maxHeap = GetHeap();
+            maxHeap.Remove(2);
+            Assert.AreEqual("98765431", GetString(maxHeap));
+
+            maxHeap = GetHeap();
+            maxHeap.Remove(3);
+            Assert.AreEqual("98765421", GetString(maxHeap));
+
+            maxHeap = GetHeap();
+            maxHeap.Remove(4);
+            Assert.AreEqual("98765321", GetString(maxHeap));
+
+            maxHeap = GetHeap();
+            maxHeap.Remove(5);
+            Assert.AreEqual("98764321", GetString(maxHeap));
+
+            maxHeap = GetHeap();
+            maxHeap.Remove(6);
+            Assert.AreEqual("98754321", GetString(maxHeap));
+
+            maxHeap = GetHeap();
+            maxHeap.Remove(7);
+            Assert.AreEqual("98654321", GetString(maxHeap));
+
+            maxHeap = GetHeap();
+            maxHeap.Remove(8);
+            Assert.AreEqual("97654321", GetString(maxHeap));
+
+            maxHeap = GetHeap();
+            maxHeap.Remove(9);
+            Assert.AreEqual("87654321", GetString(maxHeap));
+
+            maxHeap = GetHeap();
+            maxHeap.Remove(10);
+            Assert.AreEqual("987654321", GetString(maxHeap));
+        }
+
+        private MinHeap<int> GetHeap()
+        {
+            MinHeap<int> maxHeap = CreateMaxHeap();
+            maxHeap.Push(1);
+            maxHeap.Push(9);
+            maxHeap.Push(2);
+            maxHeap.Push(8);
+            maxHeap.Push(3);
+            maxHeap.Push(7);
+            maxHeap.Push(4);
+            maxHeap.Push(6);
+            maxHeap.Push(5);
+
+            return maxHeap;
+        }
+
+        private MinHeap<int> CreateMaxHeap()
+        {
+            MinHeap<int> maxHeap = new MinHeap<int>(Comparer<int>.Create((a, b) => b.CompareTo(a)));
+            return maxHeap;
+        }
+
+        private string GetString(MinHeap<int> heap)
+        {
+            StringBuilder str = new StringBuilder();
+            while (heap.Count > 0)
             {
-                actual.Append(maxHeap.Remove());
+                str.Append(heap.Pop());
             }
 
-            string expected = "12345678910";
-
-            Assert.AreEqual(expected, actual.ToString());
+            return str.ToString();
         }
     }
 }

@@ -41,7 +41,7 @@ namespace CustomDataStructures
             }
         }
 
-        public void Add(T item)
+        public void Push(T item)
         {
             if (_lastItemIndex == _arr.Length - 1)
             {
@@ -54,7 +54,7 @@ namespace CustomDataStructures
             MinHeapifyUp(_lastItemIndex);
         }
 
-        public T Remove()
+        public T Pop()
         {
             if (_lastItemIndex == -1)
             {
@@ -78,6 +78,40 @@ namespace CustomDataStructures
             }
 
             return _arr[0];
+        }
+
+        public void Remove(T item)
+        {
+            int index = Array.IndexOf(_arr, item);
+            if (index < 0)
+            {
+                return;
+            }
+
+            if (index == 0)
+            {
+                Pop();
+                return;
+            }
+
+            if (index == _lastItemIndex)
+            {
+                _lastItemIndex--;
+                return;
+            }
+
+            _arr[index] = _arr[_lastItemIndex];
+            _lastItemIndex--;
+
+            int parentIndex = (index - 1) / 2;
+            if (_comparer.Compare(_arr[index], _arr[parentIndex]) < 0)
+            {
+                MinHeapifyUp(index);
+            }
+            else
+            {
+                MinHeapifyDown(index);
+            }
         }
 
         public void Clear()
